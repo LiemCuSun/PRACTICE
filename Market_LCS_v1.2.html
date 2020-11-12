@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market v1.1</title>
+</head>
+<body></body>
+<script>
+    //  Produk
+    let apple, orange, grape;
+
+    // define harga produk
+    let hargaApple = 10000
+    let hargaOrange = 15000
+    let hargaGrape = 20000
+    
+    // define stock masing-masing produk
+    let stockApple = 10
+    let stockOrange = 10
+    let stockGrape = 10
+    
+    
+    // define variable untuk menampung input dari user
+    // NOTE : prompt akan menghasilkan value dengan tipe data string
+    // prompt kalau misalkan kosong / tidak diisi value = null
+    
+    // buat check input
+    // pastikan user tidak input kosong = null
+    // kalau input > stok : alert melebihi stok, then set input = 0
+    
+    // Main Looping
+main : while (true) {
+
+    // Apple
+    let x = 0
+    do {
+        let apple1 = parseInt(prompt("Masukan total apple 🍎 yang ingin anda beli!"))
+        
+        if (apple1 > stockApple) {
+            alert("Pembelian apple🍎 melebihi stock toko ! Mohon masukan ulang")
+        } else if (isNaN(apple1)) {
+            alert ("🚫 Wrong Input !!")
+        } else if (apple1 == 0) {
+            apple = apple1
+            x = 1
+        } else if (stockApple >= apple1) {
+            apple = apple1
+            stockApple = parseInt(stockApple - apple)
+            alert("Pembelian Apel Berhasil")
+            x = 1
+        } 
+    } while (x == 0)
+    
+    // Orange
+    let y = 0
+    do {
+        let orange1 = parseInt(prompt("Masukan total orange 🍊 yang ingin anda beli!"))
+        
+        if (orange1 > stockOrange) {
+            alert("Pembelian orange🍊 melebihi stock toko ! Mohon masukan ulang")
+        } else if (isNaN(orange1)) {
+            alert ("🚫 Wrong Input !!")
+        } else if (orange1 == 0) {
+            orange = orange1
+            y = 1
+        } else if (stockOrange >= orange1) {
+            orange = orange1
+            stockOrange = parseInt(stockOrange - orange)
+            alert("Pembelian Orange Berhasil")
+            y = 1
+        } 
+    } while (y == 0)  
+    
+    // Grape
+    let z = 0
+    do {
+        let grape1 = parseInt(prompt("Masukan total grape 🍇 yang ingin anda beli!"))
+        
+        if (grape1 > stockGrape) {
+            alert("Pembelian grape🍇 melebihi stock toko ! Mohon masukan ulang")
+        } else if (isNaN(grape1)) {
+            alert ("🚫 Wrong Input !!")
+        } else if (grape1 == 0) {
+            grape = grape1
+            z = 1
+        } else if (stockGrape >= grape1) {
+            grape = grape1
+            stockGrape = parseInt(stockGrape - grape)
+            alert("Pembelian Grape Berhasil")
+            z = 1
+        } 
+    } while (z == 0)
+    
+    // calculate total
+    let totalBeliApple = apple * hargaApple
+    let totalBeliOrange = orange * hargaOrange
+    let totalBeliGrape = grape * hargaGrape
+    let totalBelanja = totalBeliApple + totalBeliOrange + totalBeliGrape
+
+    
+    // tampilkan output : detail belanja
+    alert (`Detail belanja
+            Total apple 🍎 : ${apple} buah x ${hargaApple} = ${totalBeliApple}
+            Total orange 🍊 : ${orange} buah x ${hargaOrange} = ${totalBeliOrange}
+            Total grape 🍇 : ${grape} buah x ${hargaGrape} = ${totalBeliGrape}
+            
+            Stock 🍎 Tersisa = ${stockApple}
+            Stock 🍊 Tersisa = ${stockOrange}
+            Stock 🍇 Tersisa = ${stockGrape}
+
+            Total Belanja : ${totalBelanja}`)
+
+    /** setelah alert detail belanja => minta input pembayaran
+     * check input pembayaran
+     * total belanja 10rb => input pembayaran > 10rb
+     * kalau ada sisa => tampilkan sisa pembayaran
+     * kurangi stok sebelum minta konfirmasi belanja lagi */
+
+    // Input Pembayaran User
+
+    let p = 0
+    
+    do {
+        let pembayaran = parseInt(prompt (`
+        Total tagihan Rp ${totalBelanja} 
+        
+        Mohon masukan nominal pembayaran`))
+
+        let InputPembayaran = pembayaran
+
+        if (InputPembayaran < totalBelanja) {
+            alert (`Nominal yang anda masukan kurang dari total belanja anda !`)
+        } else if (InputPembayaran == 0) {
+            alert ("🚫 Wrong Input !!")
+        } else if (isNaN (InputPembayaran)) {
+            alert ("🚫 Wrong Input !!")
+        } else if (InputPembayaran >= totalBelanja) {
+            alert (`
+                    Pembelanjaan berhasil !
+
+                    Detail Belanja Anda 😊
+
+                    Apple 🍎 = ${apple} buah x Rp ${hargaApple}/kg = Rp ${totalBeliApple}
+                    Orange 🍊 : ${orange} buah x Rp ${hargaOrange}/kg = Rp ${totalBeliOrange}
+                    Grape 🍇 : ${grape} buah x Rp ${hargaGrape}/kg = Rp ${totalBeliGrape}
+
+                    Total Belanja     = Rp ${totalBelanja}
+                    Jumlah Pembayaran = Rp ${InputPembayaran}
+                    Uang kembalian    = Rp ${InputPembayaran - totalBelanja}
+                    
+                    Stock 🍎 Tersisa = ${stockApple}
+                    Stock 🍊 Tersisa = ${stockOrange}
+                    Stock 🍇 Tersisa = ${stockGrape}`)
+            p = 1
+        }
+    } while (p == 0)
+
+    // User purchase confirmation
+    let confirmation = confirm("Apakah anda ingin belanja lagi?")
+
+    if (confirmation === false) {
+        alert(`Terimakasih telah berbelanja di toko kami! 🙏`)
+        break main
+    }
+}
+
+</script>
+
+</html>

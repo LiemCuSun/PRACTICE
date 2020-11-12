@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Apps</title>
+</head>
+
+<body>
+    <center>
+        <h1> COUNTDOWN APPS</h1>
+        <form id="form">
+            <p>Masukan input: <input type="number">
+        </form>
+        <button onclick="OnButtonClickMe()">START</button>
+        <br>
+        <h1 id="num">0</h1>
+    </center>
+</body>
+<script>
+    // Set the date we're counting down to
+    var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
+    
+
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+        // Output the result in an element with id="demo"
+        document.getElementById("num").innerHTML = seconds + "s ";
+
+
+        // If the count down is over, write some text 
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("num").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+</script>
+
+</html>

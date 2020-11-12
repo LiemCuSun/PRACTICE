@@ -1,0 +1,8 @@
+- buat aplikasi untuk market v.1
+	- minta input user berupa total produk yang mau di beli
+	- produk : apple, orange, grape
+	- cara pengerjaan
+	  - tentukan harga tiap produk
+	  - minta input user => total poduk yang dibeli
+	  - hitung total harga => harga * total produk
+	  - tampilkan detail belanja

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repeat Word !</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //buat program untuk melipat gandakan string
+    // input : hello & 4
+    // output : hello, hello, hello, hello
+
+    let inputWord = prompt('Masukan Kata !')
+    let number = Number(prompt('Masukan berapa kali pesan kata akan ditampilkan !'))
+    let result = ' '
+
+    for (let i = 0; i < number; i++) {
+        result += inputWord + " "
+    }
+
+    alert(result)
+
+</script>
+
+</html>

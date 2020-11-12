@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TABLE</title>
+    <style>
+        table,
+        tr,
+        td,
+        th {
+            border: 1px solid black;
+            border-collapse: separate;
+            background-color: #53e237;
+            width: auto;
+        }
+
+        th,
+        td {
+            padding: 10px;
+        }
+
+        td {
+            text-align: center;
+            background-color: #ffffff
+        }
+
+        body {
+            background-color: #ffffff;
+        }
+
+        button {
+            padding: 2px 20px;
+        }
+    </style>
+</head>
+
+<body style="background-color:rgb(255, 255, 255)">
+        <h1><img src="https://icon-library.com/images/stark-icon/stark-icon-28.jpg" alt="" height="100px">Produk Baru</h1>
+        <form id="produk-baru">
+            <input type="text" id="nama" placeholder="nama produk">
+            <input type="text" id="img" placeholder="image">
+            <input type="number" id="harga" placeholder="harga">
+            <input type="number" id="stok" placeholder="stok">
+            <button onclick="OnButtonAdd(event)">ADD</button>
+        </form>
+
+        <h1>Filter</h1>
+        Sort by Harga 💸
+        <select>
+            <option value="0">⬇ Ascending</option>
+            <option value="1">⬆ Descending</option>
+        </select>
+        <button onclick="OnButtonSort()"><img
+                src="https://www.clipartmax.com/png/middle/345-3458587_filter-sort-icon-icon.png" alt=""
+                height="10px">SORT</button>
+        <br>
+        Search by Name <input type="text" placeholder="search by name" id="searchInput">
+        <button onclick="OnButtonSearch()" id="searchBtn">search 🔎</button>
+        <h1>Daftar Produk</h1>
+        <table id="daftar-produk">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Produk</th>
+                    <th>Image</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <h1>User Cart</h1>
+        <table id="user-cart">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Produk</th>
+                    <th>Image</th>
+                    <th>Harga</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <br>
+        <button onclick="OnButtonCetak()" disabled id="cetak">🧾 PRINT RECEIPT</button>
+        <br>
+        <p id="receipt">Receipt : </p>
+
+        <input type="number" placeholder="input total pembayaran" id="uang" hidden>
+        <button onclick="OnButtonCheckOut()" id="checkout" hidden>CHEKOUT 🛒</button>
+</body>
+<script src="/Day_15_database_HP.js"></script>
+<script src="/Day_15_Produk_HP.js"></script>
+<script src="/Day_15_usercart_HP.js"></script>
+<script src="/Day_15_transaction_HP.js"></script>
+
+</html>

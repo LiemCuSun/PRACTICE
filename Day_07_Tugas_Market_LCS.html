@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Market v1.1</title>
+    </head>
+    <body></body>
+    <script>
+        // define semua variable dalam bentuk array
+        let products = ["Apple 🍎", "Orange 🍊", "Grape 🍇"]
+        let harga = [10000, 15000, 20000]
+        let stock = [35, 40, 15]
+        
+        // let qty = [0, 0, 0, 0] // quantity
+        let qty = new Array(products.length) // [ , , ]
+        
+        let total = [0,0,0]
+        let totalBelanja
+        let bayar
+        
+        // show menu
+        function ShowMenu () {
+            let menu = "Selamat datang di toko ANDA \n"
+            
+            // looping
+            for (let i = 0; i < products.length; i++) {
+                menu += `${i + 1}. ${products[i]} Rp ${harga[i]},00 /kg \n`
+            }
+            
+            // show alert
+            alert(menu)
+        }
+        
+        
+        // TODO function show detail belanja
+        // calculate total
+        function ShowDetailBelanja () {
+            
+            let detailbelanja = "Detail Belanja Anda: \n"
+            
+            // tampilkan output : detail belanja
+            total[0] = harga[0]*qty[0]
+            total[1] = harga[1]*qty[1]
+            total[2] = harga[2]*qty[2]
+            totalBelanja = total.reduce((a, b) => a + b)
+
+            for (let i = 0; i < products.length; i++) {
+                detailbelanja += `${i + 1}. ${products[i]} = ${qty[i]} buah x Rp ${harga[i]},00 /kg = Rp ${total[i]} \n`
+            }   detailbelanja += `\n Sisa Total Belanja = Rp ${totalBelanja},00`
+            
+            
+            alert(detailbelanja)
+        }
+        
+        // TODO function minta input
+
+        function menampungInput () {
+            for(let i = 0; i < products.length; i++) {
+
+            while (true) {
+                qty[i] = parseInt(prompt(`Masukan total ${products[i]} yang ingin anda beli!`))        
+                if (qty[i] > stock[i]) {
+                    alert(`input ${products[i]} over stock`)
+                } else if (isNaN(qty[i])) {
+                    alert("⚠ wrong input.")
+                } else {
+                    break
+                }
+            }
+            }
+    
+        }
+        
+        
+            
+        function mintaInput () {
+            while (true) {
+                bayar = parseInt(prompt("Masukan uang anda !"))
+                if (bayar < totalBelanja) {
+                    alert("Maaf uang anda kurang")
+                } else if (isNaN(bayar)) {
+                    alert("⚠ Wrong input !")
+                } else {
+                    break
+                }
+            }
+        }
+        
+        // TODO function untuk kurangi stock
+        function reduceStock () {
+            let ShowSisaStock = ""
+            for (let i = 0; i < products.length; i++) {
+                stock[i] -= qty[i]
+                ShowSisaStock += `Sisa product ${products[i]} = ${stock[i]} buah \n`
+            }
+            alert(ShowSisaStock)
+        }
+        // NOTE :
+        // - buat function show detail belanja
+        // - buat function minta input 
+        // - buat function untuk kurangi stock
+        
+        main : while (true) {
+            // show menu
+            ShowMenu()
+            // alert(`
+            //     Selamat di toko ANDA
+            //     1. Apple 🍎 Rp 10.000,00 /kg
+            //     2. Orange 🍊 Rp 15.000,00 /kg
+            //     3. Grape 🍇 RP 20.0000,00 /kg
+            // `)
+            
+            // define variable untuk menampung input dari user
+            menampungInput()
+            
+            // Function show detail belanja
+            ShowDetailBelanja()
+            
+            // minta input pembayaran
+            mintaInput()
+
+            // check kembalian
+            let kembalian = bayar - totalBelanja
+            if (bayar > totalBelanja) {
+                alert(`
+                    Terima kasih sudah berbelanja di toko kami 🙏
+                    Uang kembalian : Rp ${kembalian},00 
+                `)
+            } else {
+                alert("Terima kasih sudah berbelanja di toko kami 🙏")
+            }
+
+            // kurangi stock
+
+            reduceStock()
+
+            // minta user confirmation
+            let confirmation = confirm("Apakah anda ingin belanja lagi?")
+            if (confirmation === false) {
+                break main
+            }
+        }
+
+    </script>
+</html>

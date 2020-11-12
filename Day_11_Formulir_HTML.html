@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pendaftaran</title>
+</head>
+
+<body>
+    <h1>Formulir Pendaftaran Anggota Baru Banget</h1>
+    <form id="data-diri" action="">
+        <fieldset>
+            <legend>Data Diri</legend>
+            <input type="text" placeholder="nama depan" />
+            <input type="text" placeholder="nama belakang" />
+            <input type="number" placeholder="nomer telephone" />
+            <input type="number" placeholder="anak ke-" />
+
+            <!-- check box -->
+            <br>
+            <input type="radio" name="gender" value="Laki-laki" checked> Laki - Laki
+            <input type="radio" name="gender" value="Perempuan"> Perempuan
+
+        </fieldset>
+        <fieldset>
+            <legend>Alamat</legend>
+            <input type="text" placeholder="alamat 1" />
+            <input type="text" placeholder="alamat 2" />
+            <input type="text" placeholder="alamat 3" />
+        </fieldset>
+        <br>
+        <button>SUBMIT</button>
+    </form>
+    <br><br> <button>pattern1</button>
+    <br><br> <button>pattern2</button>
+    <br><br> <button>pattern3</button>
+    <div id="data-diri">
+        <h1>Data Output: </h1>
+    </div>
+</body>
+<script>
+    // get all value inside form
+    let form = document.getElementById("data-diri")
+    let button = document.body.getElementsByTagName("button")
+    console.log(form)
+    console.log(form.firstElementChild)
+    button[0].addEventListener("click", () => {
+        event.preventDefault()
+        console.log("submit on click")
+
+        // get value di data diri
+        let inputDataDiri = form.getElementsByTagName("input")
+        console.log(inputDataDiri)
+
+        // get value
+        console.log(inputDataDiri[0].value)
+        console.log(inputDataDiri[1].value)
+        console.log(inputDataDiri[2].value)
+        console.log(inputDataDiri[3].value)
+
+        // get value from radio button
+        let gender
+        if (inputDataDiri[4].checked) {
+            gender = inputDataDiri[4].value
+        } else {
+            gender = inputDataDiri[5].value
+        }
+        console.log(`gender : ${gender}`)
+
+        document.body.innerHTML += `<h4>Nama Depan : ${inputDataDiri[0].value}
+            <br>Nama Belakang : ${inputDataDiri[1].value}
+            <br>No Telephone : ${inputDataDiri[2].value}
+            <br>Anak ke : ${inputDataDiri[3].value}
+            <br>Gender : ${gender}
+            <br>Alamat ke 1 : ${inputDataDiri[6].value}
+            <br>Alamat ke 2 : ${inputDataDiri[7].value}
+            <br>Alamat ke 3 : ${inputDataDiri[8].value}
+            </h4>`
+    })
+
+    button[1].addEventListener("click", () => {
+        console.log("pattern1 executed")
+
+        let n = 5
+        let a = 1
+        let pattern1 = ""
+        for (let i = n; i > 0; i--) {
+            for (let j = 0; j < i; j++) {
+                pattern1 += j + a + " "
+
+            }
+            for (let k = 0; k < i - 1; k++) {
+                pattern1 += n - 1 - k + " "
+            }
+            pattern1 += " <br>"
+            a += 1
+        }
+        console.log(pattern1)
+        document.body.innerHTML += `<h4> Pattern 1 <br>${pattern1}</h4>`
+    })
+
+    button[2].addEventListener("click", () => {
+        console.log("pattern2 executed")
+
+        let n = 7
+        let pattern = ""
+        let output = 1
+        for (let i = 1; i <= n; i++) {
+            for (let j = 1; j <= n; j++) {
+                if (j > n - i) {
+                    output = i
+                }
+                pattern += `${output} `
+            }
+
+            pattern += " <br>"
+            output = 1
+        }
+        console.log(pattern)
+        document.body.innerHTML += `<h4> Pattern 2 <br>${pattern}</h4>`
+    })
+
+    button[3].addEventListener("click", () => {
+        console.log("pattern2 executed")
+
+        let n = 7
+        let pattern = ""
+        for (let i = 0; i < n; i++) {
+            for (let j = n; j > i; j--) {
+                pattern += " "
+            }
+            for (let k = 0; k < i; k++) {
+                if (i % 2 == 0) {
+                    pattern += k + 1 + " "
+                } else {
+                    pattern += "* "
+                }
+            }
+            pattern += "<br>"
+        }
+        console.log(pattern)
+        document.body.innerHTML += `<h4> Pattern 3 <br>${pattern}</h4>`
+    })
+
+
+</script>
+
+</html>

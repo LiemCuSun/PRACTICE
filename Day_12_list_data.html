@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DISPLAY LIST DATA</title>
+</head>
+<body>
+    <H1>Daftar Belanja</H1>
+    <input type="text" placeholder="Masukan daftar belanja" id="newproduct">
+    <button onclick="OnButtonAdd()">ADD</button>
+    <!-- NOTE Bikin List Secara Manual -->
+    <ul id="list">
+        <!-- <li>Pensil</li>
+        <li>Binder</li>
+        <li>Buku tulis</li>
+        <li>LCD Monitor</li> -->
+    </ul>
+</body>
+<script>
+    let daftarBelanja = ["pensil", "buku tulis", "mousepad", "LCD Monitor", "Ayam"]
+
+    // TODO tampilkan data di array dalam bentuk list <li>
+    let ul = document.getElementById("list")
+    console.log(ul)
+
+    // dapetin value dari seriap item/element didalam array
+    // lalu kita masukan kedalam <ul>
+    function ShowList () {
+    let li = ""
+    for (let i = 0; i < daftarBelanja.length; i++) {
+       li += `<li>${daftarBelanja[i]}</li>`
+
+        // NOTE : innerHTML akan menyebabkan halaman kita ditulis ulang
+    }
+    ul.innerHTML = li
+    }
+
+    // TODO add list baru
+    daftarBelanja.push("kamera digital")
+    
+    ShowList()
+    daftarBelanja.push("TV 43 inch")
+    ShowList()
+    let newProduk = document.getElementById("newproduct")
+    console.log(newProduk)
+
+    function OnButtonAdd () {
+        console.log("add produk di click")
+
+        // get value dari input newProduk
+        console.log(newProduk.value)
+
+        // masukan value ke daftar belanja
+        daftarBelanja.push(newProduk.value)
+        console.log(daftarBelanja)
+
+        // tampilkan list
+        ShowList()
+
+        // hapus value di input
+        newProduk.value = ""
+    }
+
+
+
+</script>
+</html>

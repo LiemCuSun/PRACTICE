@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solve it! #10</title>
+</head>
+<body></body>
+<script>
+let angka = prompt("Masukan Angka !")
+
+// Solve dengan IF !
+
+if (angka % 2 == 0) {
+    alert(`Angka ${angka} terbilang GENAP !`)
+    console.log(`Angka ${angka} terbilang GENAP !`)
+} else {
+    alert(`Angka ${angka} terbilang GANJIL !`)
+    console.log(`Angka ${angka} terbilang GANJIL !`)
+}
+
+// Solve dengan switch !
+
+switch(angka) {
+    case (angka % 2 == 0) :
+    alert(`Angka ${angka} terbilang GENAP !`)
+    console.log(`Angka ${angka} terbilang GENAP !`)
+        break
+    default :
+    alert(`Angka ${angka} terbilang GANJIL !`)
+    console.log(`Angka ${angka} terbilang GANJIL !`)
+}
+
+</script>
+</html>

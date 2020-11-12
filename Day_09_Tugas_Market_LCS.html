@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market v1.1</title>
+</head>
+
+<body></body>
+<script>
+
+    let qty = []
+
+    // TODO kumpulkan data product, stock, harga 
+    // menjadi satu collection of data => [{...}, {...}, ...]
+    class Products {
+        constructor(namaproduk, harga, stock) {
+            this.namaproduk = namaproduk,
+            this.harga = harga,
+            this.stock = stock
+        }
+    }
+
+    let produk = []
+    produk.push(new Products("Apple 🍎", 20000, 30))
+    produk.push(new Products("Orange 🍊", 15000, 25))
+    produk.push(new Products("Grape 🍇", 21000, 28))
+
+    // let products = [{ name : "Apple", harga : 10000, stock : 35 }]
+    // products[0] => { name : "Apple", harga : 10000, stock : 35 }
+    // products[0].name
+
+    // NOTE : 
+
+    // manfaatkan default value di prompt
+    // prompt(pesan, default-value)
+    // prompt("masukan nama product", "Lemon")
+
+
+    // TODO buat sebuah menu baru dalam bentuk prompt sebelum show menu 
+
+    // show menu
+    function ShowMenu() {
+        let InputMenu
+
+        // looping
+        while (true) {
+            InputMenu = parseInt(prompt(
+                `Selamat datang di TOKO ANDA !!
+                
+                Masukan input menu yang anda inginkan
+                
+                1 = Add new product
+                2 = Show all products
+                3 = Edit products
+                4 = Buy a product`))
+            if (InputMenu == 1) {
+                AddProduct()
+            } else if (isNaN(InputMenu)) {
+                alert("⚠ Wrong input!.")
+            } else if (InputMenu == 2) {
+                ShowProducts()
+            } else if (InputMenu == 3) {
+                EditProducts()
+            } else if (InputMenu == 4) {
+                break
+            } else {
+                alert("⚠ Wrong input!.")
+            }
+        }
+    }
+
+
+
+    // NOTE :
+    // TODO 1. add new product => minta input nama product, harga, stock
+    // TODO - lakukan input validation pada menu ke 1
+    // nama, harga, stock tidak boleh kosong
+    // harga dan stock tidak boleh sama dengan nol
+
+    function AddProduct() {
+        // ask input new product
+        // check input
+        let nama
+        let harga
+        let stock
+
+        LoopNama: while (true) {
+            nama = prompt("Masukan nama product yang baru :")
+            if (nama == undefined) {
+                alert("⚠ wrong input.")
+            } else if (nama == "") {
+                alert("⚠ wrong input.")
+            } else {
+                break LoopNama
+            }
+        }
+        LoopHarga: while (true) {
+            harga = parseInt(prompt("Masukan harga"))
+            if (isNaN(harga)) {
+                alert("⚠ wrong input.")
+            } else if (harga == 0) {
+                alert("⚠ wrong input.")
+            } else {
+                break LoopHarga
+            }
+        }
+        LoopStock: while (true) {
+            stock = parseInt(prompt("Masukan total barang"))
+            if (isNaN(stock)) {
+                alert("⚠ wrong input.")
+            } else if (stock == 0) {
+                alert("⚠ wrong input.")
+            } else {
+                break LoopStock
+            }
+        }
+
+        // ask user confirmation
+        let msg = "Apakah anda ingin menambahan \n " + `${nama} dengan harga Rp ${harga},00 sebanyak ${stock} buah?`
+        let confirmation = confirm(msg)
+        if (confirmation == true) {
+            produk.push(new Products(nama, harga, stock))
+        }
+    }
+
+    // TODO tambahkan fitur baru : edit product
+    // tampilkan sambil minta prompt product mana yang mau di edit
+    // jika user sudah memilih product mana yang mau di edit
+    // minta input nama, harga, dan stock yang baru
+    function EditProducts() {
+        let ListMenu = ""
+        let menu = ""
+        for (let i = 0; i < produk.length; i++) {
+            ListMenu += `${i + 1}. ${produk[i].namaproduk}\n`
+        }
+        LoopEdit: while (true) {
+            menu = parseInt(prompt(`List Produk Terdaftar \n${ListMenu} \n Masukan input produk yang anda ingin di update`))
+            if (menu > produk.length) {
+                alert("⚠ wrong input.")
+            } else {
+                break LoopEdit
+            }
+        }
+
+        let nama
+        let harga
+        let stock
+
+        LoopNama: while (true) {
+            nama = prompt("Masukan perubahan nama product :")
+            if (nama == undefined) {
+                alert("⚠ wrong input.")
+            } else if (nama == "") {
+                alert("⚠ wrong input.")
+            } else {
+                break LoopNama
+            }
+        }
+        LoopHarga: while (true) {
+            harga = parseInt(prompt("Masukan perubahan harga"))
+            if (isNaN(harga)) {
+                alert("⚠ wrong input.")
+            } else if (harga == 0) {
+                alert("⚠ wrong input.")
+            } else {
+                break LoopHarga
+            }
+        }
+        LoopStock: while (true) {
+            stock = parseInt(prompt("Masukan perubahan stock barang"))
+            if (isNaN(stock)) {
+                alert("⚠ wrong input.")
+            } else if (stock == 0) {
+                alert("⚠ wrong input.")
+            } else {
+                break LoopStock
+            }
+        }
+
+        produk[menu - 1].namaproduk = nama
+        produk[menu - 1].harga = harga
+        produk[menu - 1].stock = stock
+    }
+
+    // TODO 2. show all product => ShowProducts()
+    function ShowProducts() {
+        let menu = "Selamat datang di toko ANDA \n"
+
+        // looping
+        for (let i = 0; i < produk.length; i++) {
+            menu += `${i + 1}. ${produk[i].namaproduk} harga Rp.${produk[i].harga},00 /kg \n`
+        }
+        for (let h = 0; h < produk.length; h++) {
+            menu += `\n Stock ${produk[h].namaproduk} = ${produk[h].stock} kg`
+        }
+
+        // show alert
+        alert(menu)
+    }
+
+    // TODO 3. buy a product => 
+
+    // show menu
+
+    function AskInput() {
+        for (let i = 0; i < produk.length; i++) {
+            inputloop: while (true) {
+                // ask input
+                qty[i] = parseInt(prompt(`Masukan total ${produk[i].namaproduk} yang ingin anda beli !`))
+
+                // check input
+                if (isNaN(qty[i])) {
+                    alert("⚠ wrong input.")
+                } else if (qty[i] > produk[i].stock) {
+                    alert("input over stock.")
+                } else {
+                    break inputloop
+                }
+            }
+        }
+    }
+
+    function ShowDetailsBelanja() {
+        // calculate total
+        let total = TotalBelanja() // [...]
+
+        let details = "Detail belanja anda, \n"
+        for (let i = 0; i < qty.length; i++) {
+            details += `Total ${produk[i].namaproduk}, ${qty[i]} x ${produk[i].harga} = ${total[i]} \n`
+        }
+
+        details += `Total yang harus dibayar = ${total.reduce((a, b) => a + b)}`
+
+        alert(details)
+    }
+
+    // function untuk menghitung total belanja
+    function TotalBelanja() {
+        let total = []
+        for (let i = 0; i < qty.length; i++) {
+            total.push(produk[i].harga * qty[i])
+        }
+
+        return total
+    }
+
+    function KurangiStok() {
+        for (let i = 0; i < produk.length; i++) {
+            produk[i].stock -= qty[i]
+        }
+    }
+
+
+
+    main: while (true) {
+        // show all menu
+        ShowMenu()
+
+        // show all products
+        ShowProducts()
+
+        // ask user input
+        AskInput()
+
+        // show detaiils belanja
+        ShowDetailsBelanja()
+
+        // minta input pembayaran
+        let uangDariUser
+        let total = TotalBelanja()
+        let totalYangHarusDibayar = total.reduce((a, b) => a + b)
+        while (true) {
+            uangDariUser = parseInt(prompt("Masukan uang anda !"))
+            if (uangDariUser < totalYangHarusDibayar) {
+                alert("Maaf uang anda kurang.")
+            } else if (isNaN(uangDariUser)) {
+                alert("⚠ Wrong input!.")
+            } else {
+                break
+            }
+        }
+
+        // check kembalian
+        let kembalian = uangDariUser - totalYangHarusDibayar
+        if (kembalian > 0) {
+            alert(`
+                    Terima kasih sudah berbelanja di toko kami 🙏
+                    Uang kembalian : Rp ${kembalian},00 
+                `)
+        } else {
+            alert("Terima kasih sudah berbelanja di toko kami 🙏")
+        }
+
+        // kurangi stock
+        KurangiStok()
+
+        // minta user confirmation
+        let confirmation = confirm("Apakah anda ingin belanja lagi?")
+        if (confirmation === false) {
+            break main
+        }
+    }
+</script>
+
+</html>

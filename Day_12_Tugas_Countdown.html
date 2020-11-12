@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Apps</title>
+</head>
+
+<body>
+    <center>
+        <h1> COUNTDOWN APPS</h1>
+        <form id="form">
+            <p>Masukan input: <input type="number">
+        </form>
+        <button onclick="OnButtonClickMe()">START</button>
+        <br>
+        <h1 id="num">0</h1>
+    </center>
+</body>
+<script>
+    let input1
+    
+    function OnButtonClickMe() {
+        input1 = document.getElementById("form").elements[0].value
+        console.log("Button sudah di click.")
+        console.log(input1)
+        setInterval(Counting(), 1000)
+    }
+    
+    function Counting() {
+        let countdown = document.getElementById("num").innerHTML = `${input1}`
+        console.log(input1)
+        while (true) {
+
+            if (input1 > 0) {
+                setInterval(countdown, 1000)
+                input1 -= 1
+            } else {
+                break
+            } console.log(input1)
+        }
+    }
+</script>
+
+</html>

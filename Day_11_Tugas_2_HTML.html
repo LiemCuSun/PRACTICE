@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+        <h4>1. Siapakah Presiden ketiga Republik Indonesia?</h4>
+        <input class="no.1" type="radio" name="choice" value="1" checked> Prof.B.J.Habibie
+        <input class="no.1" type="radio" name="choice" value="2" > Abdurrahman Wahid
+        <input class="no.1" type="radio" name="choice" value="3" > Ir.Soekarna
+        <input class="no.1" type="radio" name="choice" value="4" > Joko Widodo
+        <h4>2.Berikut adalah nama-nama bahasa pemrograman, kecuali ...</h4>
+        <input class="no.2" type="radio" name="choice1" value="1" checked> Python
+        <input class="no.2" type="radio" name="choice1" value="2" > Micro:bit
+        <input class="no.2" type="radio" name="choice1" value="3" > JavaScript
+        <input class="no.2" type="radio" name="choice1" value="4" > HTML
+        <h4>3. Apa judul lagu yang diduga diplagiat oleh lagu 'Sayang' Via Vallen?</h4>
+        <input class="no.3" type="radio" name="choice2" value="1" checked> Qing Fei De Yi
+        <input class="no.3" type="radio" name="choice2" value="2" > Ting Hai
+        <input class="no.3" type="radio" name="choice2" value="3" > Mirai E Kiroro
+        <input class="no.3" type="radio" name="choice2" value="4" > Hau Siang Hau Siang
+        <h4>4. Siapakah sosok di balik topeng Batman?</h4>
+        <input class="no.4" type="radio" name="choice3" value="1" checked> Natasha Romanov
+        <input class="no.4" type="radio" name="choice3" value="2" > Peter Parker
+        <input class="no.4" type="radio" name="choice3" value="3" > Tony Stark
+        <input class="no.4" type="radio" name="choice3" value="4" > Bruce Wayne
+        <br><br><button onclick="nilai()">SUBMIT</button>
+        <h1 id="tes"> Nilai Akhir Anda </h1>
+</body>
+<script>
+    let input1 = document.getElementsByClassName("no.1")
+    let input2 = document.getElementsByClassName("no.2")
+    let input3 = document.getElementsByClassName("no.3")
+    let input4 = document.getElementsByClassName("no.4")
+    let hasilAkhir = document.getElementById("tes")
+    let no1 = ""
+    let no2 = ""
+    let no3 = ""
+    let no4 = ""
+    let kunciJawaban = [1,2,3,4]
+    
+
+    function nilai() {
+        if (input1[0].checked) {
+            no1 = parseInt(25)
+        } else {
+            no1 = parseInt(0)
+        }
+        if (input2[1].checked) {
+            no2 = parseInt(25)
+        } else {
+            no2 = parseInt(0)
+        }if (input3[2].checked) {
+            no3 = parseInt(25)
+        } else {
+            no3 = parseInt(0)
+        }if (input4[3].checked) {
+            no4 = parseInt(25)
+        } else {
+            no4 = parseInt(0)
+        }
+        console.log(no1)
+        console.log(no2)
+        console.log(no3)
+        console.log(no4)
+        hasilAkhir.innerHTML = `Nilai Akhir Anda = ${no1 + no2 + no3 + no4}`
+
+    }
+    
+
+</script>
+
+</html>

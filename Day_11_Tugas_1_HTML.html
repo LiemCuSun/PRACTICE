@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <center>
+        <h1>Kalkulator Sederhana</h1>
+        <form id="form">
+            <p>Masukan angka 1: <input type="number">
+            <p>Masukan angka 2: <input type="number">
+        </form>
+        <button onclick="kali()">Kali *</button>
+        <button onclick="bagi()">Bagi /</button>
+        <button onclick="tambah()">Tambah +</button>
+        <button onclick="kurang()">Kurang -</button>
+        <br><br><button onclick="modulus()">Modulus %</button>
+        <button onclick="pangkat()">Pangkat ^</button>
+        <p id="tes"> Hasil </p>
+        </form>
+    </center>
+
+</body>
+<script>
+    function kali() {
+        let input1 = document.getElementById("form").elements[0].value;
+        let input2 = document.getElementById("form").elements[1].value;
+        document.getElementById("tes").innerHTML = `${input1} x ${input2} = ` + input1 * input2;
+    }
+    function bagi() {
+        let input1 = document.getElementById("form").elements[0].value;
+        let input2 = document.getElementById("form").elements[1].value;
+        document.getElementById("tes").innerHTML = `${input1} / ${input2} = ` + input1 / input2
+    }
+    function tambah() {
+        let input1 = document.getElementById("form").elements[0].value;
+        let input2 = document.getElementById("form").elements[1].value;
+        document.getElementById("tes").innerHTML = `${input1} + ${input2} = ` + `${parseInt(input1) + parseInt(input2)}`
+    }
+    function kurang() {
+        let input1 = document.getElementById("form").elements[0].value;
+        let input2 = document.getElementById("form").elements[1].value;
+        document.getElementById("tes").innerHTML = `${input1} - ${input2} = ` + `${parseInt(input1) - parseInt(input2)}`
+    }
+    function modulus() {
+        let input1 = document.getElementById("form").elements[0].value;
+        let input2 = document.getElementById("form").elements[1].value;
+        document.getElementById("tes").innerHTML = `${input1} % ${input2} = ` + `${parseInt(input1) % parseInt(input2)}`
+    }
+    function pangkat() {
+        let input1 = document.getElementById("form").elements[0].value;
+        let input2 = document.getElementById("form").elements[1].value;
+        document.getElementById("tes").innerHTML = `${input1} <sup>${input2}</sup> = ` + `${parseInt(input1) ** parseInt(input2)}`
+    }
+    
+</script>
+
+</html>

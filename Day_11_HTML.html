@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML + JS event</title>
+</head>
+<body>
+    <h1>Serius, jangan di klik!</h1>
+    <button onclick="OnButton()">CLICK ME</button>
+    <button onclick="OnbuttonReset()">RESET</button>
+    <button>Zoom Out</button>
+    <button>Zoom In Text</button>
+    <button>Itung Klik</button>
+    <br> <h1>Count : 0</h1> <br>
+    <button>➕</button>
+    <h1>0</h1>
+    <button>➖</button> <br><br>
+    <button>SHOW</button>
+    
+</body>
+<script>
+    function OnButton () {
+        console.log("Button Click Me sudah di Klik")
+
+        let h1 = document.body.firstElementChild
+
+        h1.textContent = "Sudah dibilang JANGAN DI CLICK !!!!"
+    }
+
+    function OnbuttonReset() {
+        console.log("Button Reset sudah di klik")
+
+        let h1 = document.body.firstElementChild
+
+        h1.textContent = "Serius, jangan di klik!"
+    }
+
+    let button = document.body.getElementsByTagName("button")
+    let h1 = document.body.getElementsByTagName("h1")
+    
+    button[2].addEventListener("click", function () {
+        console.log("button zoom out text di klik")
+
+        let h1 = document.body.firstElementChild
+        h1.style.fontSize = "16px"
+    })
+    button[3].addEventListener("click", function () {
+        console.log("button zoom in text di klik!")
+
+        let h1 = document.body.firstElementChild
+        h1.style.fontSize = "32px"
+    })
+
+    button[4].addEventListener("click", OnbtnCountMe) 
+    
+    let CountMe = 0
+    function OnbtnCountMe () {
+        CountMe++
+        console.log(`button itung klik sudah di klik ${CountMe} x`)
+    }
+
+    let numb = 0
+    button[5].addEventListener("click", function(){
+        console.log ("increment")
+        numb++
+
+        h1[2].textContent = `${numb}`
+    })
+    button[6].addEventListener("click", function(){
+        console.log ("decrement")
+        numb--
+
+        h1[2].textContent = `${numb}`
+    })
+    button[7].addEventListener("click", () => setTimeout(WOW, 4000))
+    
+    function WOW () {
+        console.log("SHOW")
+        let h1Element = document.createElement("h1")
+        h1Element.textContent = "WOW 😲😲😲"
+
+        document.body.append(h1Element)
+    }
+
+
+
+</script>
+</html>

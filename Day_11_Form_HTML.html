@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Form</title>
+</head>
+<body>
+    <form id="form-register" action="">
+        <label for="Name">Name :</label>
+        <input type="text" name="input nama" placeholder="masukan nama anda"/><br>
+        
+        <label for="Username">Username :</label>
+        <input type="text" name="input username" placeholder="masukan username anda"/><br>
+        
+        <label for="Email">Email :</label>
+        <input type="text" name="input email" placeholder="masukan email anda"/><br>
+        
+        <label for="Password">Password :</label>
+        <input type="text" name="input password" placeholder="masukan password anda"/>
+        
+        <button>REGISTER</button>
+    </form>
+    <button>GET VALUE</button>
+</body>
+<script>
+    // FORM
+    // get input valie dari user ?
+
+    // #1 add event on input element
+    let input = document.body.getElementsByTagName("input")
+    input [0].addEventListener("change", () => {
+        console.log("terjadi perubahan")
+
+        // get value from input
+        console.log(input[0])
+        console.log(input[0].value)
+    })
+
+    // NOTE :
+    // event "change" akan mendeteksi perubahan di element
+    // ketika kita tekan tombol enter maka function akan dijalankan
+
+    // #2 get value setelah button di click
+    // let button = document.body.getElementsByTagName("button")
+    
+
+    // // TODO CASE : buat input element => username & emai
+    // // get value saat click button
+    // button[0].addEventListener("click", () => {
+    //     console.log("get value from user")
+
+    //     console.log(`Username : ${input[0].value}`)
+    //     console.log(`Email : ${input[1].value}`)
+
+        // document.body.innerHTML += `<h1>Username : ${input[0].value}
+        //     <br>Email : ${input[1].value}</h1>`
+    // })
+
+    let form = document.getElementById("form-register")
+    let inputForm = form.getElementsByTagName("input")
+    let btnRegister = form.lastElementChild
+    btnRegister.addEventListener("click", (event) => {
+        console.log("button register activated")
+
+        event.preventDefault()
+
+        // get input from user dalam form
+        console.log(`Name :${inputForm[0].value}`)
+        console.log(`Username :${inputForm[1].value}`)
+        console.log(`Email :${inputForm[2].value}`) 
+        console.log(`Password :${inputForm[3].value}`)
+    })
+
+
+
+
+</script>
+</html>
