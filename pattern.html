@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Only</title>
+</head>
+
+<body>
+    <h1>Pattern</h1>
+    <p id="output"></p>
+    <br> <p id="output2">"output2"</p>
+    <br> <p id="output3">"output3"</p>
+    <br> <p id="output4">"output4"</p>
+</body>
+<script>
+    // TODO task to perform
+    // * Write program that print following pattern input = 4
+    /**        0    
+     *       1 0 1
+     *     2 1 0 1 2
+     *   3 2 1 0 1 2 3
+     * 4 3 2 1 0 1 2 3 4
+    */
+
+    let n6 = 4
+    let pattern7 = ""
+    let temp7 = 0
+    let temp7b = 0
+    let temp7c = 1
+
+    for (let i = n6; 0 <= i; i--) {
+        for (let j = 0; j <= n6; j++) {
+            if (j == n6) {
+                pattern7 += 0
+            } else if (j < i) {
+                pattern7 += " "
+            } else if (j === i) {
+                pattern7 += temp7
+            } else if (j > i) {
+                pattern7 += temp7 - 1 - temp7b
+                temp7b++
+            }
+        }
+        for (let k = n6; 0 < k; k--) {
+            if (i == n6) {
+                pattern7 += " "
+            } else if (k > i) {
+                pattern7 += temp7c
+                temp7c++
+            } else {
+                pattern7 += " "
+            }
+        }
+        pattern7 += "\n"
+        temp7 += 1
+        temp7b = 0
+        temp7c = 1
+    }
+    console.log(pattern7)
+
+    let output = document.getElementById("output")
+    let inp = 7
+    let pattern = ""
+
+    for (let i = 0; i < inp; i++) {
+        for (let j = 0; j <= i; j++) {
+            if (i % 2 == 0) {
+                pattern += "*&nbsp"
+            } else {
+                pattern += "#&nbsp"
+            }
+        }
+        pattern += "<br>"
+    }
+    console.log(pattern)
+    output.innerHTML = pattern
+
+
+    let output2 = document.getElementById("output2")
+    let input2 = 5
+    let pattern2 = ""
+
+    for (let i = 0; i <= input2; i++) {
+        for (let j = input2; j > -input2; j--) {
+            if(Math.abs(j) >= i) {
+                pattern2 += "&nbsp&nbsp&nbsp"
+            } else {
+                pattern2 += Math.abs(j) + "&nbsp"
+            }
+        } pattern2 += "<br>"
+    }
+    output2.innerHTML = pattern2
+    
+    let output3 = document.getElementById("output3")
+    let input3 = 5
+    let pattern3 = ""
+    let temp = 0
+
+    for (let i = 0; i <= input3; i++) {
+        for (let j = 0; j < input3 + i + 1; j++) {
+            if ( j < input3 - i) {
+                pattern3 += "&nbsp&nbsp&nbsp"
+            } else if ( j < 5) {
+                pattern3 += j + 1 + "&nbsp"
+            } else if ( j == input3) {
+                pattern3 += "0" + "&nbsp"
+            } else {
+                pattern3 += input3 - temp + "&nbsp"
+                temp ++
+            }
+        } pattern3 += "<br>"
+        temp = 0
+    }
+    output3.innerHTML = pattern3
+    
+    let output4 = document.getElementById("output4")
+    let input4 = 5
+    let pattern4 = ""
+    let temp2 = 0
+
+    for (let i = 0; i <= input4; i++) {
+        for (let j = 0; j < input4 + i + 1; j++) {
+            // if ( j < input4 - i) {
+            //     pattern4 += "&nbsp&nbsp&nbsp"
+            // } else if ( j < 5) {
+            //     pattern4 += j + 1 + "&nbsp"
+            // } else if ( j == input4) {
+            //     pattern4 += "0" + "&nbsp"
+            // } else {
+            //     pattern4 += input4 - temp2 + "&nbsp"
+            //     temp2 ++
+            // }
+            pattern4 += j < input4 - i ? "&nbsp&nbsp&nbsp" 
+            : j < 5 ? j + 1 + "&nbsp" 
+            : j == input4 ? "0" + "&nbsp"
+            : input4 - temp2 + "&nbsp" 
+            
+            temp2 ++
+        } 
+        pattern4 += "<br>"
+        temp2 = 0
+    }
+    output4.innerHTML = pattern4
+
+
+</script>
+
+</html>
