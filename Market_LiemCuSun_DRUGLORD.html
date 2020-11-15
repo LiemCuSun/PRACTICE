@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAPPY PILLS 💊</title>
+    <style id="Table_Product">
+        table,
+        tr,
+        td,
+        th {
+            border: 1px solid black;
+            border-collapse: separate;
+            background-color: #53e237;
+            width: auto;
+        }
+
+        th,
+        td {
+            padding: 10px;
+        }
+
+        td {
+            text-align: center;
+            background-color: #ffffff
+        }
+
+        body {
+            background-color: #ffffff;
+        }
+
+        button {
+            padding: 2px 20px;
+        }
+    </style>
+    <style id="star">
+        .checked {
+            color: orange;
+        }
+    </style>
+</head>
+
+<body style="background-color:rgb(255, 255, 255)">
+    <h1><img src="https://www.tempo.co/imageproxy?image=http://www.abc.net.au/cm/rimage/9911686-16x9-large.jpg?v=2"
+            alt="" height="100px">Add New Drug Here!</h1>
+    <form id="produk-baru">
+        <input type="text" id="nama" placeholder="product name">
+        <input type="text" id="img" placeholder="image">
+        <input type="number" id="harga" placeholder="price">
+        <input type="number" id="stok" placeholder="stock">
+        <button onclick="OnButtonAdd(event)">LAUNCH DRUG ONLINE</button>
+    </form>
+
+    <h1>Filter</h1>
+    Sort by Harga 💸
+    <select>
+        <option value="0">⬇ Ascending</option>
+        <option value="1">⬆ Descending</option>
+    </select>
+    <button onclick="OnButtonSort()"><img
+            src="https://www.clipartmax.com/png/middle/345-3458587_filter-sort-icon-icon.png" alt=""
+            height="10px">SORT</button>
+    <br>
+    Search by Name <input type="text" placeholder="search by name" id="searchInput">
+    <button onclick="OnButtonSearch()" id="searchBtn">search 🔎</button>
+    <h1>List of Happiness 🙂</h1>
+    <table id="daftar-produk">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Description</th>
+                <th>Product Image</th>
+                <th>Price/pcs</th>
+                <th>Stock</th>
+                <th>Option</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h1>User Cart</h1>
+    <table id="user-cart">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Description</th>
+                <th>Product Image</th>
+                <th>Price/pcs</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Option</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <button onclick="OnButtonCetak()" disabled id="cetak">🧾 PRINT RECEIPT</button>
+    <br>
+    <p id="receipt">Receipt : </p>
+
+    <input type="number" placeholder="input total pembayaran" id="uang" hidden>
+    <button onclick="OnButtonCheckOut()" id="checkout" hidden>CHEKOUT 🛒</button>
+</body>
+<script id="Database">
+    // create database
+    let dataProduk = [
+        {
+            id: 1,
+            name: "LSD",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ2dgDKSTGi9KvahOn6tD6MyrJV6-rDuaLRsA&usqp=CAU",
+            harga: 71000,
+            stok: 120
+        },
+        {
+            id: 2,
+            name: "Weed (per ounce)",
+            img: "data:image/jpeg;base64,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",
+            harga: 3110800,
+            stok: 20
+        },
+        {
+            id: 3,
+            name: "Heroin (per gram)",
+            img: "data:image/jpeg;base64,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",
+            harga: 5797400,
+            stok: 50
+        },
+        {
+            id: 4,
+            name: "Amphetamine",
+            img: "data:image/jpeg;base64,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",
+            harga: 1784400,
+            stok: 80
+        }
+    ]
+
+    let userCart = []
+
+    // class untuk bikin object produk
+    class Produk {
+        constructor(id, name, img, harga, stok) {
+            this.id = id,
+                this.name = name,
+                this.img = img,
+                this.harga = harga,
+                this.stok = stok
+        }
+    }
+
+    class ProdukCart {
+        constructor(id, name, img, harga, quantity) {
+            this.id = id,
+                this.name = name,
+                this.img = img,
+                this.harga = harga,
+                this.quantity = quantity
+        }
+
+        total = function () {
+            return this.quantity * this.harga
+        }
+    }
+</script>
+<script id="Product">
+    // menampilkan data ke table => access table
+    function ShowProducts(index) {
+        console.log("index", index)
+        let table = document.getElementById("daftar-produk")
+        console.log(table)
+
+        let tbody = table.getElementsByTagName("tbody")[0]
+        console.log(tbody)
+
+        let tr = ""
+        for (let i = 0; i < dataProduk.length; i++) {
+            if (index === i) {
+                tr += `
+                <tr>
+                <td>#</td>
+                <td>
+                <input id="edit-nama" type="text" value="${dataProduk[i].name}">
+                </td>
+                <td>
+                <input id="edit-img" type="text" value="${dataProduk[i].img}">
+                </td>
+                <td>
+                <input id="edit-harga" type="number" value="${dataProduk[i].harga}">
+                </td>
+                <td>
+                <input id="edit-stock" type="number" value="${dataProduk[i].stok}">
+                </td>
+                <td>
+                <button onclick="OnButtonSave(${i})">SAVE</button>
+                <button onclick="OnButtonCancel()">CANCEL</button>
+                </td>
+                </tr>`
+            } else {
+                tr += `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${dataProduk[i].name}</td>
+                    <td>
+                        <img src="${dataProduk[i].img}" height="60px">
+                    </td>
+                    <td>${dataProduk[i].harga}</td>
+                    <td>${dataProduk[i].stok}</td>
+                    <td>
+                        <button onclick="OnButtonDelete(${i})">DELETE</button>
+                        <button onclick="OnButtonEdit(${i})">EDIT</button>
+                        <button class="add-to-cart" onclick="OnButtonAddToCart(${i})">ADD TO CART</button>
+                    </td>
+                </tr>
+            `
+            }
+        }
+        tbody.innerHTML = tr
+    }
+    ShowProducts()
+
+    // add new produk saat button add di klik
+    // dataProduk.push(new Produk(dataProduk.length + 1, "Samsung Galaxy Fold 2", "https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-z-fold2-5g-2.jpg", 29000000, 2))
+    // console.log(dataProduk)
+    // ShowProducts()
+
+    function OnButtonAdd(e) {
+        console.log("event", e)
+        e.preventDefault()
+        console.log("add button di klik")
+
+        // get input value
+        let form = document.getElementById("produk-baru")
+        console.log(form)
+        console.log(form["nama"].value)
+
+
+        // check input value => tidak boleh ada value yang kosong
+        // check value dari harga dan stok tidak boleh < 0 atau negatif
+        let nama = form["nama"].value
+        let img = form["img"].value
+        let harga = form["harga"].value
+        let stok = form["stok"].value
+
+        if (nama === "" || img === "" || harga === "" || stok === "") {
+            alert("input tidak boleh kosong")
+        } else {
+            // masukan semua value ke daftar produk dalam bentuk object
+            dataProduk.push(new Produk(
+                dataProduk.length + 1,
+                form["nama"].value,
+                form["img"].value,
+                parseInt(form["harga"].value),
+                parseInt(form["stok"].value)
+            ))
+            console.log(dataProduk)
+
+            // tampilkan ulang produk
+            ShowProducts()
+
+            // reset value di form
+            form["nama"].value = ""
+            form["img"].value = ""
+            form["harga"].value = ""
+            form["stok"].value = ""
+        }
+
+    }
+
+    // ShowProducts()
+    function OnButtonDelete(index) {
+        console.log(`button index ke-${index} di klik`)
+
+        // delete produk
+        dataProduk.splice(index, 1)
+
+        // tampikan ulang produk
+        ShowProducts()
+    }
+
+    // edit produk
+    function OnButtonEdit(index) {
+        console.log(`button edit index ke-${index}`)
+
+        // tampilkan table
+        ShowProducts(index)
+    }
+
+    // save edited produk
+    function OnButtonSave(index) {
+        console.log("button save di klik")
+
+        // get value dari input data yang mau di edit
+        let editNama = document.getElementById("edit-nama").value
+        let editImg = document.getElementById("edit-img").value
+        let editHarga = parseInt(document.getElementById("edit-harga").value)
+        let editStock = parseInt(document.getElementById("edit-stock").value)
+        console.log(editNama)
+        console.log(editImg)
+        console.log(editHarga)
+        console.log(editStock)
+
+        // edit daftar produk dengan value baru
+        dataProduk[index].name = editNama
+        dataProduk[index].img = editImg
+        dataProduk[index].harga = editHarga
+        dataProduk[index].stok = editStock
+        console.log(dataProduk)
+
+        // tampilkan ulang table produk
+        ShowProducts()
+    }
+
+    // cancel edit
+    function OnButtonCancel() {
+        console.log("button cancel di klik")
+
+        // tampilkan ulang table produk
+        ShowProducts()
+    }
+
+    // add fitur sorting
+    function OnButtonSort() {
+        console.log("button sort di klik")
+        let select = document.getElementsByTagName("select")[0].value
+        console.log(select)
+        // get value dari option
+        // let option = "harga"
+
+        // sorting data
+        // method .sort() akan jalan untuk array yang isinya number
+        if (select == 0) {
+            // callback function, untuk sorting by harga
+            function sorting(a, b) {
+                if (a.harga > b.harga) {
+                    return 1
+                }
+                if (a.harga < b.harga) {
+                    return -1
+                }
+                return 0
+            }
+        } else {
+            function sorting(a, b) {
+                if (a.harga > b.harga) {
+                    return -1
+                }
+                if (a.harga < b.harga) {
+                    return 1
+                }
+                return 0
+            }
+        }
+        dataProduk.sort(sorting)
+
+        // tampilan ulang produk
+        ShowProducts()
+    }
+</script>
+<script id="UserChart">
+    // add to cart
+    function OnButtonAddToCart(index) {
+        // console.log(`button ke-${index} add to cart di klik`)
+        console.log("data yang mau dimasukan", dataProduk[index].name)
+        let produk = { ...dataProduk[index] }
+        // saya mau copy semua properties dari dataProduk[index]
+        console.log(produk)
+        let cartIndex // variable ini akan dipakai untuk menampung index dari data produk yang sudah ada di cart
+
+        // cari data produk yang sama di user cart
+        for (let i = 0; i < userCart.length; i++) {
+            if (userCart[i].name === produk.name) {
+                cartIndex = i
+            }
+        }
+
+        // check apakah stok produk yang ingin kita masukan
+        // ke dalam cart masih ada
+        if (dataProduk[index].stok === 0) {
+            alert("⚠ stock kosong.")
+        } else {
+            // add produk ke cart
+            if (cartIndex !== undefined) {
+                userCart[cartIndex].quantity += 1
+            } else {
+                userCart.push(
+                    new ProdukCart(
+                        userCart.length + 1,
+                        dataProduk[index].name,
+                        dataProduk[index].img,
+                        dataProduk[index].harga,
+                        1
+                    )
+                )
+            }
+
+            // kita kurangi stok
+            dataProduk[index].stok -= 1
+        }
+
+
+        console.log("cart setelah di add", userCart)
+
+        // enable button cetak receipt
+        let button = document.getElementById("cetak")
+        if (button.disabled === true) {
+            button.disabled = false
+        }
+
+        // tampilkan data userCart di HTML
+        ShowProducts()
+        ShowUserCart()
+    }
+
+    // show user cart
+    function ShowUserCart() {
+        // get access table body
+        let table = document.getElementById("user-cart")
+        let tbody = table.getElementsByTagName("tbody")[0]
+        // console.log(table)
+        // console.log(tbody)
+
+        // tambahkan baris baru sesuai banyaknya produk di userCart
+        let tr = ""
+        for (let i = 0; i < userCart.length; i++) {
+            tr += `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${userCart[i].name}</td>
+                <td>
+                    <img src="${userCart[i].img}" height="60px">
+                </td>
+                <td>${userCart[i].harga}</td>
+                <td>${userCart[i].quantity}</td>
+                <td>${userCart[i].total()}</td>
+                <td>
+                    <button class="delete-cart" onclick="OnButtonDeleteCart(${i})">DELETE</button>
+                </td>
+            </tr>
+        `
+        }
+
+        // tambahkan ke tbody
+        tbody.innerHTML = tr
+    }
+
+    // delete produk di cart
+    function OnButtonDeleteCart(index) {
+        console.log(`button ke-${index} delete cart di klik`)
+
+        // cari index dari nama produk yang ada di cart index ke-index
+        // di daftar produk
+        let idxProduk = dataProduk.findIndex((item) => item.name === userCart[index].name)
+        // for (let i = 0; i < dataProduk.length; i++) {
+        //     if (dataProduk[i].name === userCart[index].name) {
+        //         idxProduk = i
+        //         break
+        //     }
+        // }
+
+
+        // delete produk yang ada id cart
+        // check apakah quantity produk di userCart masih ada
+        if (userCart[index].quantity === 1) {
+            userCart.splice(index, 1) // hapus produk di cart
+        } else {
+            userCart[index].quantity -= 1 // kurangi quantity produk di cart by 1
+        }
+
+        // balikin stok ke daftar produk
+        dataProduk[idxProduk].stok += 1
+
+        // disable button cetak receipt jika cart kosong
+        let button = document.getElementById("cetak")
+        if (userCart.length === 0) {
+            button.disabled = true
+        }
+
+
+
+        // tampilkan ulang cart
+        ShowProducts()
+        ShowUserCart()
+    }
+</script>
+<script id="Transaction">
+    // cetak receipt
+    function OnButtonCetak() {
+        console.log("button cetak di klik")
+        let receipt = document.getElementById("receipt")
+
+        // cetak receipt
+        let output = "Receipt : <br>"
+        let total = 0
+        for (let i = 0; i < userCart.length; i++) {
+            output += `${i + 1}. ${userCart[i].name} x ${userCart[i].quantity} = ${userCart[i].total()} <br>`
+            total += userCart[i].total()
+        }
+
+        output += `<br> Total belanja : Rp ${total},00`
+
+        // tampilkan di HTML
+        receipt.innerHTML = output
+
+        // disable button delete and add to cart
+        let btnDelete = document.body.getElementsByClassName("delete-cart") // HTML collection
+        let btnAddToCart = document.body.getElementsByClassName("add-to-cart") // HTML Collection
+        for (let i = 0; i < btnDelete.length; i++) {
+            btnDelete[i].disabled = true
+        }
+
+        // bentuk looping kedua
+        for (let item of btnAddToCart) {
+            // console.log(item)
+            item.disabled = true
+        }
+
+        // show checkout
+        let uang = document.getElementById("uang")
+        let checkout = document.getElementById("checkout")
+        uang.hidden = false
+        checkout.hidden = false
+    }
+
+    // checkout
+    function OnButtonCheckOut() {
+        console.log("button checkout di klik")
+
+        // get value dari input
+        let uang = document.getElementById("uang") // string
+        let uangDariClient = parseInt(uang.value)
+
+        // hitung total belanja
+        let total = 0
+        for (let item of userCart) {
+            total += item.total()
+        }
+
+        // check kembalian
+        let kembalian = uangDariClient - total
+
+        // bandingkan total dengan uang dari client
+        if (uangDariClient < total) {
+            alert("Uang tidak cukup.")
+        } else if (isNaN(uangDariClient)) {
+            alert("Masukan jumlah uang yang mau di bayarkan.")
+        } else if (kembalian > 0) {
+            alert(`Terima kasih sudah berbelanja \n uang kembalian : Rp ${kembalian},00 .`)
+            reset()
+        } else {
+            alert("Terima kasih sudah berbelanja.")
+            reset()
+        }
+
+        // setelah prosess checkout, reset semua kondisi
+        uang.value = ""
+    }
+
+    // reset
+    function reset() {
+        // kosongkan cart
+        userCart = []
+
+        // reset button delete and add to cart
+        let btnDelete = document.body.getElementsByClassName("delete-cart") // HTML collection
+        let btnAddToCart = document.body.getElementsByClassName("add-to-cart") // HTML Collection
+        let btnCetak = document.getElementById("cetak")
+        btnCetak.disabled = true
+        for (let item of btnDelete) {
+            item.disabled = false
+        }
+
+        for (let item of btnAddToCart) {
+            // console.log(item)
+            item.disabled = false
+        }
+
+        // hapus receipt
+        let receipt = document.getElementById("receipt")
+        receipt.textContent = `Receipt :`
+
+        // hide checkout
+        let checkout = document.getElementById("checkout")
+        uang.hidden = true
+        checkout.hidden = true
+
+        // tampilkan ulang tablenya
+        ShowProducts()
+        ShowUserCart()
+    }
+
+    function OnButtonSearch() {
+        console.log("search button executed")
+
+        // get access to the input user
+        let copyProduct = []
+        // get access to the table
+        let table = document.getElementById("daftar-produk")
+        // console.log(table)
+        let tbody = table.getElementsByTagName("tbody")[0]
+        // console.log(tbody)
+        let search = document.getElementById("searchInput").value
+        console.log(search)
+
+        let myRegex = new RegExp(search, "gim")
+        console.log(myRegex)
+
+        if (search === '') {
+            alert("input search kosong")
+        } else {
+            let tr = ""
+            // console.log(regex)
+            for (let i = 0; i < dataProduk.length; i++) {
+                let testRegex = myRegex.test(dataProduk[i].name)
+                if (testRegex === true) {
+                    tr += `
+                <tr>
+                <td>${i + 1}</td>
+                <td>${dataProduk[i].name}</td>
+                <td>
+                <img src="${dataProduk[i].img}" height="60px">
+                </td>
+                <td>${dataProduk[i].harga}</td>
+                <td>${dataProduk[i].stok}</td>
+                <td>
+                <button onclick="OnButtonDelete(${i})">DELETE</button>
+                <button onclick="OnButtonEdit(${i})">EDIT</button>
+                <button class="add-to-cart" onclick="OnButtonAddToCart(${i})">ADD TO CART</button>
+                </td>
+                </tr>`
+                }
+            }
+            tbody.innerHTML = tr
+            document.getElementById("searchInput").value = ""
+        }
+    }
+
+</script>
+
+</html>
