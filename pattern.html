@@ -132,12 +132,15 @@
             //     pattern4 += input4 - temp2 + "&nbsp"
             //     temp2 ++
             // }
-            pattern4 += j < input4 - i ? "&nbsp&nbsp&nbsp" 
-            : j < 5 ? j + 1 + "&nbsp" 
-            : j == input4 ? "0" + "&nbsp"
-            : input4 - temp2 + "&nbsp" 
             
-            temp2 ++
+            pattern4 += j < input4 - i ? "&nbsp&nbsp&nbsp"
+            :j < 5 ? j + 1 + "&nbsp": j == input4 ? "0" + "&nbsp"
+            : j == input4 + 1 ? input4 - temp2 + "&nbsp"
+            : j == input4 + 2 ? input4 - temp2 - 1 + "&nbsp"
+            : j == input4 + 3 ? input4 - temp2 - 2 + "&nbsp"
+            : j == input4 + 4 ? input4 - temp2 - 3 + "&nbsp"
+            : input4 - temp2 - 4 + "&nbsp"
+            
         } 
         pattern4 += "<br>"
         temp2 = 0

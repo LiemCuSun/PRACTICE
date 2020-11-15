@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Liem Cu Sun</title>
+    <style>
+        table,
+        tr,
+        td,
+        th {
+            border: 1px solid black;
+            border-collapse: separate;
+            background-color: #53e237;
+            width: auto;
+        }
+
+        th,
+        td {
+            padding: 10px;
+        }
+
+        td {
+            text-align: center;
+            background-color: #ffffff
+        }
+
+        body {
+            background-color: #ffffff;
+        }
+
+        button {
+            padding: 2px 20px;
+        }
+    </style>
+</head>
+
+<body style="background-color:rgb(255, 255, 255)">
+    <h1><img src="https://icon-library.com/images/stark-icon/stark-icon-28.jpg" alt="" height="100px">Produk Baru</h1>
+    <form id="produk-baru">
+        <input type="text" id="nama" placeholder="nama produk">
+        <input type="text" id="img" placeholder="image">
+        <input type="number" id="harga" placeholder="harga">
+        <input type="number" id="stok" placeholder="stok">
+        <button onclick="OnButtonAdd(event)">ADD</button>
+    </form>
+
+    <h1>Filter</h1>
+    Sort by Harga 💸
+    <select>
+        <option value="0">⬇ Ascending</option>
+        <option value="1">⬆ Descending</option>
+    </select>
+    <button onclick="OnButtonSort()"><img
+            src="https://www.clipartmax.com/png/middle/345-3458587_filter-sort-icon-icon.png" alt=""
+            height="10px">SORT</button>
+    <br>
+    Search by Name <input type="text" placeholder="search by name" id="searchInput">
+    <button onclick="OnButtonSearch()" id="searchBtn">search 🔎</button>
+    <h1>Daftar Produk</h1>
+    <table id="daftar-produk">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Produk</th>
+                <th>Image</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h1>User Cart</h1>
+    <table id="user-cart">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Produk</th>
+                <th>Image</th>
+                <th>Harga</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+    <button onclick="OnButtonCetak()" disabled id="cetak">🧾 PRINT RECEIPT</button>
+    <br>
+    <p id="receipt">Receipt : </p>
+
+    <input type="number" placeholder="input total pembayaran" id="uang" hidden>
+    <button onclick="OnButtonCheckOut()" id="checkout" hidden>CHEKOUT 🛒</button>
+</body>
+<script id: Database>
+    // create database
+    let dataProduk = [
+        {
+            id: 1,
+            name: "iPhone 12",
+            img: "https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-12-pro-r1.jpg",
+            harga: 23000000,
+            stok: 12
+        },
+        {
+            id: 2,
+            name: "Samsung Galaxy Note 20",
+            img: "https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-note20-1.jpg",
+            harga: 22500000,
+            stok: 20
+        },
+        {
+            id: 3,
+            name: "Google Pixel 5 5G",
+            img: "https://fdn2.gsmarena.com/vv/pics/google/google-pixel-5-5g-1.jpg",
+            harga: 8960000,
+            stok: 5
+        },
+        {
+            id: 4,
+            name: "OnePlus 8T",
+            img: "https://fdn2.gsmarena.com/vv/pics/oneplus/oneplus-8t-1.jpg",
+            harga: 6578000,
+            stok: 8
+        }
+    ]
+
+    let userCart = []
+
+    // class untuk bikin object produk
+    class Produk {
+        constructor(id, name, img, harga, stok) {
+            this.id = id,
+                this.name = name,
+                this.img = img,
+                this.harga = harga,
+                this.stok = stok
+        }
+    }
+
+    class ProdukCart {
+        constructor(id, name, img, harga, quantity) {
+            this.id = id,
+                this.name = name,
+                this.img = img,
+                this.harga = harga,
+                this.quantity = quantity
+        }
+
+        total = function () {
+            return this.quantity * this.harga
+        }
+    }
+</script>
+<script id: Product>
+    // menampilkan data ke table => access table
+    function ShowProducts(index) {
+        console.log("index", index)
+        let table = document.getElementById("daftar-produk")
+        console.log(table)
+
+        let tbody = table.getElementsByTagName("tbody")[0]
+        console.log(tbody)
+
+        let tr = ""
+        for (let i = 0; i < dataProduk.length; i++) {
+            if (index === i) {
+                tr += `
+                <tr>
+                <td>#</td>
+                <td>
+                <input id="edit-nama" type="text" value="${dataProduk[i].name}">
+                </td>
+                <td>
+                <input id="edit-img" type="text" value="${dataProduk[i].img}">
+                </td>
+                <td>
+                <input id="edit-harga" type="number" value="${dataProduk[i].harga}">
+                </td>
+                <td>
+                <input id="edit-stock" type="number" value="${dataProduk[i].stok}">
+                </td>
+                <td>
+                <button onclick="OnButtonSave(${i})">SAVE</button>
+                <button onclick="OnButtonCancel()">CANCEL</button>
+                </td>
+                </tr>`
+            } else {
+                tr += `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${dataProduk[i].name}</td>
+                    <td>
+                        <img src="${dataProduk[i].img}" height="60px">
+                    </td>
+                    <td>${dataProduk[i].harga}</td>
+                    <td>${dataProduk[i].stok}</td>
+                    <td>
+                        <button onclick="OnButtonDelete(${i})">DELETE</button>
+                        <button onclick="OnButtonEdit(${i})">EDIT</button>
+                        <button class="add-to-cart" onclick="OnButtonAddToCart(${i})">ADD TO CART</button>
+                    </td>
+                </tr>
+            `
+            }
+        }
+        tbody.innerHTML = tr
+    }
+    ShowProducts()
+
+    // add new produk saat button add di klik
+    // dataProduk.push(new Produk(dataProduk.length + 1, "Samsung Galaxy Fold 2", "https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-z-fold2-5g-2.jpg", 29000000, 2))
+    // console.log(dataProduk)
+    // ShowProducts()
+
+    function OnButtonAdd(e) {
+        console.log("event", e)
+        e.preventDefault()
+        console.log("add button di klik")
+
+        // get input value
+        let form = document.getElementById("produk-baru")
+        console.log(form)
+        console.log(form["nama"].value)
+
+
+        // check input value => tidak boleh ada value yang kosong
+        // check value dari harga dan stok tidak boleh < 0 atau negatif
+        let nama = form["nama"].value
+        let img = form["img"].value
+        let harga = form["harga"].value
+        let stok = form["stok"].value
+
+        if (nama === "" || img === "" || harga === "" || stok === "") {
+            alert("input tidak boleh kosong")
+        } else {
+            // masukan semua value ke daftar produk dalam bentuk object
+            dataProduk.push(new Produk(
+                dataProduk.length + 1,
+                form["nama"].value,
+                form["img"].value,
+                parseInt(form["harga"].value),
+                parseInt(form["stok"].value)
+            ))
+            console.log(dataProduk)
+
+            // tampilkan ulang produk
+            ShowProducts()
+
+            // reset value di form
+            form["nama"].value = ""
+            form["img"].value = ""
+            form["harga"].value = ""
+            form["stok"].value = ""
+        }
+
+    }
+
+    // ShowProducts()
+    function OnButtonDelete(index) {
+        console.log(`button index ke-${index} di klik`)
+
+        // delete produk
+        dataProduk.splice(index, 1)
+
+        // tampikan ulang produk
+        ShowProducts()
+    }
+
+    // edit produk
+    function OnButtonEdit(index) {
+        console.log(`button edit index ke-${index}`)
+
+        // tampilkan table
+        ShowProducts(index)
+    }
+
+    // save edited produk
+    function OnButtonSave(index) {
+        console.log("button save di klik")
+
+        // get value dari input data yang mau di edit
+        let editNama = document.getElementById("edit-nama").value
+        let editImg = document.getElementById("edit-img").value
+        let editHarga = parseInt(document.getElementById("edit-harga").value)
+        let editStock = parseInt(document.getElementById("edit-stock").value)
+        console.log(editNama)
+        console.log(editImg)
+        console.log(editHarga)
+        console.log(editStock)
+
+        // edit daftar produk dengan value baru
+        dataProduk[index].name = editNama
+        dataProduk[index].img = editImg
+        dataProduk[index].harga = editHarga
+        dataProduk[index].stok = editStock
+        console.log(dataProduk)
+
+        // tampilkan ulang table produk
+        ShowProducts()
+    }
+
+    // cancel edit
+    function OnButtonCancel() {
+        console.log("button cancel di klik")
+
+        // tampilkan ulang table produk
+        ShowProducts()
+    }
+
+    // add fitur sorting
+    function OnButtonSort() {
+        console.log("button sort di klik")
+        let select = document.getElementsByTagName("select")[0].value
+        console.log(select)
+        // get value dari option
+        // let option = "harga"
+
+        // sorting data
+        // method .sort() akan jalan untuk array yang isinya number
+        if (select == 0) {
+            // callback function, untuk sorting by harga
+            function sorting(a, b) {
+                if (a.harga > b.harga) {
+                    return 1
+                }
+                if (a.harga < b.harga) {
+                    return -1
+                }
+                return 0
+            }
+        } else {
+            function sorting(a, b) {
+                if (a.harga > b.harga) {
+                    return -1
+                }
+                if (a.harga < b.harga) {
+                    return 1
+                }
+                return 0
+            }
+        }
+        dataProduk.sort(sorting)
+
+        // tampilan ulang produk
+        ShowProducts()
+    }
+</script>
+<script id: UserChart>
+    // add to cart
+    function OnButtonAddToCart(index) {
+        // console.log(`button ke-${index} add to cart di klik`)
+        console.log("data yang mau dimasukan", dataProduk[index].name)
+        let produk = { ...dataProduk[index] }
+        // saya mau copy semua properties dari dataProduk[index]
+        console.log(produk)
+        let cartIndex // variable ini akan dipakai untuk menampung index dari data produk yang sudah ada di cart
+
+        // cari data produk yang sama di user cart
+        for (let i = 0; i < userCart.length; i++) {
+            if (userCart[i].name === produk.name) {
+                cartIndex = i
+            }
+        }
+
+        // check apakah stok produk yang ingin kita masukan
+        // ke dalam cart masih ada
+        if (dataProduk[index].stok === 0) {
+            alert("⚠ stock kosong.")
+        } else {
+            // add produk ke cart
+            if (cartIndex !== undefined) {
+                userCart[cartIndex].quantity += 1
+            } else {
+                userCart.push(
+                    new ProdukCart(
+                        userCart.length + 1,
+                        dataProduk[index].name,
+                        dataProduk[index].img,
+                        dataProduk[index].harga,
+                        1
+                    )
+                )
+            }
+
+            // kita kurangi stok
+            dataProduk[index].stok -= 1
+        }
+
+
+        console.log("cart setelah di add", userCart)
+
+        // enable button cetak receipt
+        let button = document.getElementById("cetak")
+        if (button.disabled === true) {
+            button.disabled = false
+        }
+
+        // tampilkan data userCart di HTML
+        ShowProducts()
+        ShowUserCart()
+    }
+
+    // show user cart
+    function ShowUserCart() {
+        // get access table body
+        let table = document.getElementById("user-cart")
+        let tbody = table.getElementsByTagName("tbody")[0]
+        // console.log(table)
+        // console.log(tbody)
+
+        // tambahkan baris baru sesuai banyaknya produk di userCart
+        let tr = ""
+        for (let i = 0; i < userCart.length; i++) {
+            tr += `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${userCart[i].name}</td>
+                <td>
+                    <img src="${userCart[i].img}" height="60px">
+                </td>
+                <td>${userCart[i].harga}</td>
+                <td>${userCart[i].quantity}</td>
+                <td>${userCart[i].total()}</td>
+                <td>
+                    <button class="delete-cart" onclick="OnButtonDeleteCart(${i})">DELETE</button>
+                </td>
+            </tr>
+        `
+        }
+
+        // tambahkan ke tbody
+        tbody.innerHTML = tr
+    }
+
+    // delete produk di cart
+    function OnButtonDeleteCart(index) {
+        console.log(`button ke-${index} delete cart di klik`)
+
+        // cari index dari nama produk yang ada di cart index ke-index
+        // di daftar produk
+        let idxProduk = dataProduk.findIndex((item) => item.name === userCart[index].name)
+        // for (let i = 0; i < dataProduk.length; i++) {
+        //     if (dataProduk[i].name === userCart[index].name) {
+        //         idxProduk = i
+        //         break
+        //     }
+        // }
+
+
+        // delete produk yang ada id cart
+        // check apakah quantity produk di userCart masih ada
+        if (userCart[index].quantity === 1) {
+            userCart.splice(index, 1) // hapus produk di cart
+        } else {
+            userCart[index].quantity -= 1 // kurangi quantity produk di cart by 1
+        }
+
+        // balikin stok ke daftar produk
+        dataProduk[idxProduk].stok += 1
+
+        // disable button cetak receipt jika cart kosong
+        let button = document.getElementById("cetak")
+        if (userCart.length === 0) {
+            button.disabled = true
+        }
+
+
+
+        // tampilkan ulang cart
+        ShowProducts()
+        ShowUserCart()
+    }
+</script>
+<script id: Transaction>
+    // cetak receipt
+    function OnButtonCetak() {
+        console.log("button cetak di klik")
+        let receipt = document.getElementById("receipt")
+
+        // cetak receipt
+        let output = "Receipt : <br>"
+        let total = 0
+        for (let i = 0; i < userCart.length; i++) {
+            output += `${i + 1}. ${userCart[i].name} x ${userCart[i].quantity} = ${userCart[i].total()} <br>`
+            total += userCart[i].total()
+        }
+
+        output += `<br> Total belanja : Rp ${total},00`
+
+        // tampilkan di HTML
+        receipt.innerHTML = output
+
+        // disable button delete and add to cart
+        let btnDelete = document.body.getElementsByClassName("delete-cart") // HTML collection
+        let btnAddToCart = document.body.getElementsByClassName("add-to-cart") // HTML Collection
+        for (let i = 0; i < btnDelete.length; i++) {
+            btnDelete[i].disabled = true
+        }
+
+        // bentuk looping kedua
+        for (let item of btnAddToCart) {
+            // console.log(item)
+            item.disabled = true
+        }
+
+        // show checkout
+        let uang = document.getElementById("uang")
+        let checkout = document.getElementById("checkout")
+        uang.hidden = false
+        checkout.hidden = false
+    }
+
+    // checkout
+    function OnButtonCheckOut() {
+        console.log("button checkout di klik")
+
+        // get value dari input
+        let uang = document.getElementById("uang") // string
+        let uangDariClient = parseInt(uang.value)
+
+        // hitung total belanja
+        let total = 0
+        for (let item of userCart) {
+            total += item.total()
+        }
+
+        // check kembalian
+        let kembalian = uangDariClient - total
+
+        // bandingkan total dengan uang dari client
+        if (uangDariClient < total) {
+            alert("Uang tidak cukup.")
+        } else if (isNaN(uangDariClient)) {
+            alert("Masukan jumlah uang yang mau di bayarkan.")
+        } else if (kembalian > 0) {
+            alert(`Terima kasih sudah berbelanja \n uang kembalian : Rp ${kembalian},00 .`)
+            reset()
+        } else {
+            alert("Terima kasih sudah berbelanja.")
+            reset()
+        }
+
+        // setelah prosess checkout, reset semua kondisi
+        uang.value = ""
+    }
+
+    // reset
+    function reset() {
+        // kosongkan cart
+        userCart = []
+
+        // reset button delete and add to cart
+        let btnDelete = document.body.getElementsByClassName("delete-cart") // HTML collection
+        let btnAddToCart = document.body.getElementsByClassName("add-to-cart") // HTML Collection
+        let btnCetak = document.getElementById("cetak")
+        btnCetak.disabled = true
+        for (let item of btnDelete) {
+            item.disabled = false
+        }
+
+        for (let item of btnAddToCart) {
+            // console.log(item)
+            item.disabled = false
+        }
+
+        // hapus receipt
+        let receipt = document.getElementById("receipt")
+        receipt.textContent = `Receipt :`
+
+        // hide checkout
+        let checkout = document.getElementById("checkout")
+        uang.hidden = true
+        checkout.hidden = true
+
+        // tampilkan ulang tablenya
+        ShowProducts()
+        ShowUserCart()
+    }
+
+    function OnButtonSearch() {
+        console.log("search button executed")
+
+        // get access to the input user
+        let copyProduct = []
+        // get access to the table
+        let table = document.getElementById("daftar-produk")
+        // console.log(table)
+        let tbody = table.getElementsByTagName("tbody")[0]
+        // console.log(tbody)
+        let search = document.getElementById("searchInput").value
+        console.log(search)
+
+        let myRegex = new RegExp(search, "gim")
+        console.log(myRegex)
+
+        if (search === '') {
+            alert("input search kosong")
+        } else {
+            let tr = ""
+            // console.log(regex)
+            for (let i = 0; i < dataProduk.length; i++) {
+                let testRegex = myRegex.test(dataProduk[i].name)
+                if (testRegex === true) {
+                    tr += `
+                <tr>
+                <td>${i + 1}</td>
+                <td>${dataProduk[i].name}</td>
+                <td>
+                <img src="${dataProduk[i].img}" height="60px">
+                </td>
+                <td>${dataProduk[i].harga}</td>
+                <td>${dataProduk[i].stok}</td>
+                <td>
+                <button onclick="OnButtonDelete(${i})">DELETE</button>
+                <button onclick="OnButtonEdit(${i})">EDIT</button>
+                <button class="add-to-cart" onclick="OnButtonAddToCart(${i})">ADD TO CART</button>
+                </td>
+                </tr>`
+                }
+            }
+            tbody.innerHTML = tr
+            document.getElementById("searchInput").value = ""
+        }
+    }
+
+</script>
+
+</html>
