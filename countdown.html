@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>COUNTER</title>
+    </head>
+    <body>
+        <h1>COUNTER :</h1>
+        <input type="number" placeholder="masukan angka">
+        <button onclick="OnButtonCounter()">HITUNG MUNDUR</button>
+        <button onclick="OnButtonStop()">STOP</button>
+
+        <h1 id="output">Output : 0</h1>
+    </body>
+    <script>
+        let refId
+        function OnButtonCounter () {
+            console.log("button di klik")
+
+            // get value dari input
+            let input = document.body.getElementsByTagName("input")[0]
+            console.log(input)
+
+            let numb = parseInt(input.value)
+            console.log(numb)
+
+            // saya ingin membuat tampilan angka di output berubah 
+            // setiap satu detik => setiap 1s saya ubah textContent
+            let output = document.getElementById("output")
+            console.log(output)
+
+            refId = setInterval(() => {
+                if (numb === 0) {
+                    clearInterval(refId)
+                }
+                output.textContent = `Output : ${numb--}`
+            }, 1000)
+        }
+
+        function OnButtonStop () {
+            console.log("button stop")
+            clearInterval(refId)
+        }
+    </script>
+</html>
