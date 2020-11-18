@@ -2,17 +2,17 @@
 // CASE: buat program untuk menampilkan deret fibonanci, dimulai dari 0 - 25
 // 0, 1, 1, 2, 3, 5, 8, 13, ...
 
-let number = 9
+let number = 100
 let n1 = 0, n2 = 1, nextTerm;
 
 //Output
 console.log('fibonaci')
-for (let a = 1; a <= number; a++) {
-    console.log(n1)
-    nextTerm = n1 + n2
-    n1 = n2
-    n2 = nextTerm
-}
+// for (let a = 1; a <= number; a++) {
+//     console.log(n1)
+//     nextTerm = n1 + n2
+//     n1 = n2
+//     n2 = nextTerm
+// }
 
 // Cara kedua fibonaci
 let initialValue = 0
