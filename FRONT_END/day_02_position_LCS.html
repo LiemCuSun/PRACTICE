@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position</title>
+    <style>
+        #container {
+            border: 10px green solid;
+            width: 400px;
+            height: 600px;
+            margin: auto;
+
+        }
+
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background-color: salmon;
+        }
+
+        #div2 {
+            width: 100px;
+            height: 100px;
+            background-color: yellowgreen;
+            position: relative;
+            top: -20px;
+            left: 60px;
+        }
+
+        #div3 {
+            width: 100px;
+            height: 100px;
+            background-color: blanchedalmond;
+            position: relative;
+            top: -40px;
+            left: 120px;
+        }
+
+        #div4 {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(96, 167, 29);
+            position: relative;
+            position: absolute; /* ini bikin nempel ke container, ngalahin relative*/
+            
+        }
+
+        #div5 {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(255, 70, 230);
+            margin: auto;
+            top: 500px;
+            position: absolute; /* ini bikin nempel ke container, ngalahin relative*/
+        }
+
+        #div6 {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(42, 190, 55);
+            position: fixed; /* ini bikin nempel ke container, ngalahin relative*/
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="div1">1</div>
+        <div id="div2">2</div>
+        <div id="div3">3</div>
+        <div id="div4">4</div>
+        <div id="div5">5</div>
+        <div id="div6">6</div>
+
+    </div>
+
+</body>
+
+</html>
