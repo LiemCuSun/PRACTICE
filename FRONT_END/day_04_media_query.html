@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Query</title>
+    <style>
+        * {
+            transition: 800ms;
+        }
+
+        #container {
+            width: 100%;
+            height: 500px;
+            background-color: hotpink;
+            display: flex;
+            align-items: center;
+            margin: auto;
+        }
+
+        #container div {
+            /* width dan height  */
+            width: 100%;
+            height: 80%;
+            /* background-color: tomato; */
+            /* margin: auto;
+            display: flex;
+            flex-direction: column; */
+            margin: 20px 20px;
+            color: yellow;
+        }
+
+        #div1 {
+            /* NOTE kalau udah pake #container div maka udah ga usah atur satu2 kek gini (width and heightnya) */
+            /* width: 100px;
+            height: 100px; */
+            background-color: rgb(158, 148, 165);
+        }
+
+        #div2 {
+            /* width: 100px;
+            height: 100px; */
+            background-color: rgb(36, 143, 72);
+        }
+
+        #div3 {
+            /* width: 100px;
+            height: 100px; */
+            background-color: rgb(45, 43, 185);
+        }
+
+        #div4 {
+            /* width: 100px;
+            height: 100px; */
+            background-color: rgb(167, 48, 48);
+        }
+
+        /* NOTE kalau dibawah 600 ga berlaku */
+        @media screen and (min-width: 600px) {
+            body {
+                background-color: cornflowerblue;
+            }
+        }
+
+        /* diatas 600px ga berlaku */
+        @media screen and (max-width: 600px) {
+
+            /* NOTE kalau style ini active maka style global akan di overwrite, global itu seperti else, 
+            jika if & else if tidak aktif maka else akan aktif */
+            body {
+                background-color: red
+            }
+
+            h1 {
+                color: thistle;
+                margin-top: 50px;
+            }
+
+            #container {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            #container div {
+                margin: 20px 0;
+                width: 80%;
+                height: 80%;
+            }
+
+            #container {
+                width: 80%;
+                height: 100%;
+                background-color: hotpink;
+            }
+
+        }
+
+        /* NOTE dibawah 700 ga berlaku */
+        @media screen and (min-width: 700px) {
+            body {
+                background-color: greenyellow;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hello World !</h1>
+    <div id="container">
+        <div id="div1">1</div>
+        <div id="div2">2</div>
+        <div id="div3">3</div>
+        <div id="div4">4</div>
+    </div>
+</body>
+
+</html>
