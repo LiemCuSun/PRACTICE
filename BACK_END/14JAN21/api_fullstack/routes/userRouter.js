@@ -8,6 +8,9 @@ let { body } = require('express-validator')
 // NOTE import controller yang dibutuhkan
 const { userController } = require('../controllers')
 
+// import helpers
+const { verifyToken } = require('../helpers/jwt')
+
 let regValidator = [
     body('username')
         .notEmpty()
@@ -30,13 +33,28 @@ let regValidator = [
 
 ]
 
+// edit password validation
+const editPassValidation = [
+    body('password')
+        .notEmpty()
+        .withMessage('Password can\'t empty')
+        .isLength({ min: 6 })
+        .withMessage('Password must have 6 character')
+        .matches(/[0-9]/)
+        .withMessage('Password must include number')
+        .matches(/[!@#$%^&*]/)
+        .withMessage('Password must include symbol')
+]
+
 
 // NOTE create router
 router.get('/getUser', userController.getUser)
 router.post('/login', userController.login)
 router.post('/register', regValidator , userController.register) // NOTE bisa pake put juga
 router.post('/edit/:index', userController.edit) // NOTE bisa pake patch juga
+router.post('/edit_password/:id', editPassValidation, userController.editPass)
 router.delete('/delete/:index', userController.delete)
+router.post('/keepLogin', verifyToken, userController.keepLogin)
 
 // NOTE export router
 module.exports = router
