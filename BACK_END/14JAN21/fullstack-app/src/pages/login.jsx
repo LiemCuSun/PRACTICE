@@ -1,5 +1,6 @@
 // import Axios from 'axios' // NOTE ga pake axios lagi karna udah ada keep login
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef} from 'react'
+// import Axios from 'axios'
 import {
     Button,
     InputGroup,
@@ -8,7 +9,7 @@ import {
 } from 'react-bootstrap'
 
 // import action untuk login dan logout
-import { login } from '../action'
+import { login, logout } from '../action'
 
 // import connect redux
 import { connect } from "react-redux"
@@ -25,8 +26,6 @@ function Login(props) {
     renderCount.current = renderCount.current + 1
 
     let [visible, setVisible] = useState(false)
-    let [regErr, setRegErr] = useState([false, ""])
-    let [toHome, setToHome] = useState(false)
 
 
     function handleLogin(x) {
@@ -35,27 +34,20 @@ function Login(props) {
         let password = passwordRef.current.value
         console.log(username, password)
 
-        if (!username || !password) return setRegErr([true, 'Please input username & password'])
-
         const body = {
             username,
             password
         }
         props.login(body)
-        setRegErr([false, ''])
-        setToHome(true)
+
         // Axios.post(`http://localhost:2000/user/login`, { username, password })
         //     .then((res) => {
         //         console.log(res.data)
         //         if (typeof (res.data) === "string") return setRegErr([true, 'Invalid username or password'])
-        //         localStorage.username = username
-        //         localStorage.id = res.data[0].id_users
-        //         console.log(localStorage.id)
-        //         setToHome(true)
         //     })
         //     .catch((err) => { console.log(err) })
     }
-    if (toHome) return <Redirect to='/' />
+    if (props.username) return <Redirect to='/' />
     console.log(usernameRef.current.value)
     return (
         <div style={styles.background}>
@@ -96,14 +88,18 @@ function Login(props) {
                     <Button onClick={handleLogin} variant='primary' style={{ marginTop: "20px", }}>Login</Button>
                     <p>Do you have an account? <Link to='/register'>Register Here</Link> </p>
                 </div>
-                <Modal show={regErr[0]} onHide={() => setRegErr([false, ""])} backdrop="static" keyboard={false}>
+                <Modal show={Boolean(props.msgError)} onHide={props.logout}>
                     <Modal.Header closeButton>
                         <Modal.Title>Error</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>{regErr[1]}</Modal.Body>
+
+                    <Modal.Body>
+                        <p>{props.msgError}</p>
+                    </Modal.Body>
+
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setRegErr([false, ""])}>
-                            Close
+                        <Button variant="primary" onClick={props.logout}>
+                            Okay
                         </Button>
                     </Modal.Footer>
                 </Modal>
@@ -136,8 +132,9 @@ const styles = {
 
 const mapStateToProps = (state) => {
     return {
-        username: state.user.username
+        username: state.user.username,
+        msgError: state.user.errLogin
     }
 }
 
-export default connect(mapStateToProps, { login })(Login)
+export default connect(mapStateToProps, { login, logout })(Login)

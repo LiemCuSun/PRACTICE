@@ -1,5 +1,7 @@
 // NOTE setup mysql
 let mysql = require('mysql') // NOTE untuk menyambungkan api dengan mysql database
+
+
 let connection = mysql.createConnection({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,

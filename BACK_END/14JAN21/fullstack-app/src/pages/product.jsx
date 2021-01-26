@@ -14,19 +14,19 @@ export default function Product(props) {
     let renderCount = useRef(1)
     console.log(`Product page rendered ${renderCount.current} times`)
     renderCount.current = renderCount.current + 1
-    let [ data, setData ] = useState([])
-    let [ detail, setDetail] = useState(false)
-    let [ selectedProd, setSelectedProd ] = useState({})
-    let [ qty, setQty ] = useState(1)
+    let [data, setData] = useState([])
+    let [detail, setDetail] = useState(false)
+    let [selectedProd, setSelectedProd] = useState({})
+    let [qty, setQty] = useState(1)
 
-    useEffect(() => {
+    useEffect (() => {
         Axios.get("http://localhost:2000/product/getProducts")
             .then((res) => {
                 console.log(res.data)
                 setData(res.data)
             })
             .catch((err) => console.log(err))
-    },[])
+    }, [])
 
     function selectProduct(index) {
         setSelectedProd(data[index])

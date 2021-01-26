@@ -1,7 +1,10 @@
-let productController = require('./product_controller')
-let userController = require('./userController')
+const productController = require('./product_controller')
+const userController = require('./userController')
+const profileController = require('./profileController')
 
+// export controller
 module.exports = {
+    productController,
     userController,
-    productController
+    profileController
 }

@@ -33,7 +33,11 @@ function Navigation(props) {
                         variant={props.username ? 'primary' : 'success'} id="dropdown-button-drop-left" >
                         {props.username
                             ?
+                            <>
                             <Dropdown.Item onClick={props.logout}>Log out</Dropdown.Item>
+                            <Dropdown.Item as={Link} to='/verification'>Verification</Dropdown.Item>
+                            <Dropdown.Item as={Link} to='/profile'>Profile</Dropdown.Item>
+                            </>
                             :
                             <>
                                 <Dropdown.Item as={Link} to='/login' >Login</Dropdown.Item>
