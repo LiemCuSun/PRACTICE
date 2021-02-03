@@ -1,6 +1,8 @@
 var http = require('http')
-const port = 2000
+const port = 2001
 var fs = require('fs')
+let cors = require('cors') // NOTE izin sharing data / authorization
+
 
 const server = http.createServer((req, res) => {
     // console.log(req)

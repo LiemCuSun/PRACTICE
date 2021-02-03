@@ -1,7 +1,7 @@
 // import module
 let express = require('express') // NOTE pembuat server pengganti http module
 let bodyParser = require('body-parser') // NOTE untuk menampung req.body
-let cors = require('cors') // NOTE izin sharing data / authorization
+let cors = require('cors') // NOTE izin sharing data / authorization 
 require('dotenv').config()
 
 // NOTE create app
@@ -18,10 +18,11 @@ app.use(bodyParser.json())
 
 
 // NOTE import router
-let {productRouter, userRouter, profileRouter} = require('./routes')
+let {productRouter, userRouter, profileRouter, categoryRouter} = require('./routes')
 app.use('/product', productRouter)
 app.use('/user' ,userRouter)
 app.use('/profile', profileRouter)
+app.use('/cate', categoryRouter)
 app.use(express.static('./public'))
 
 

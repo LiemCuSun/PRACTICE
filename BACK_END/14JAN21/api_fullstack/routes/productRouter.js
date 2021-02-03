@@ -22,12 +22,11 @@ let regValidator = [
 let { productController } = require('../controllers')
 
 // NOTE create router
-router.get('/getProducts', productController.getAllProducts)
-router.post('/getProductName', productController.getProductByName)
-router.post('/getProductID/:index', productController.getProductByID)
-router.post('/regProduct', regValidator, productController.register) // NOTE bisa pake put juga
-router.post('/editProd/:index', regValidator, productController.edit) // NOTE bisa pake patch juga
-router.delete('/deleteProd/:index', productController.delete)
+router.get('/getAllProd', productController.getAllProd)
+router.get('/getCateProd', productController.getCateProd)
+router.post('/addProduct', regValidator, productController.addProduct)
+router.post('/editProduct/:id', regValidator, productController.editProduct) // NOTE bisa pake patch juga
+router.delete('/deleteProd/:id', productController.deleteProd)
 
 // NOTE export router
 module.exports = router

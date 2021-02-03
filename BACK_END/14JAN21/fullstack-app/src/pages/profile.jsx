@@ -34,6 +34,7 @@ class Profile extends Component {
             umur
         }
         this.props.editProfile(body, this.props.id)
+        this.setState({ edit: false})
     }
 
     handleChoose = (e) => {
@@ -48,6 +49,7 @@ class Profile extends Component {
         console.log(data.get('IMG'))
 
         this.props.upload(data, this.props.id)
+        this.setState({ image: null})
     }
 
     render() {

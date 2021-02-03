@@ -27,6 +27,8 @@ function Navigation(props) {
                 <Nav className="mr-auto">
                     <Nav.Link as={Link} to='/'>Home</Nav.Link>
                     <Nav.Link as={Link} to='/product'>Product</Nav.Link>
+                    <Nav.Link as={Link} to='/productTable'>Product Table</Nav.Link>
+                    <Nav.Link as={Link} to='/category'>Category</Nav.Link>
                 </Nav>
                 <Dropdown style={{ margin: '0 40px' }}>
                     <DropdownButton title={!props.username ? 'Username' : props.username}
